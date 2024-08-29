@@ -1,0 +1,106 @@
+//parte 1
+class Producto {
+  String nombre;
+  String precio;
+  String categoria;
+  
+  Producto(this.nombre, this.precio, this.categoria);
+  
+  void mostrarDetalles(){
+    print('Producto: $nombre, precio: $precio, categoría: $categoria');
+  }
+}
+
+/*
+ void main(){
+  Producto nuevo = new Producto('Laptop', '2000', 'Electrónica');
+  nuevo.mostrarDetalles();
+}
+*/
+
+//parte 2
+class Electronico extends Producto{
+  String garantia;
+  
+  Electronico(String nombre, String precio, String categoria, this.garantia) : super(nombre, precio, categoria);
+  
+  @override
+  void mostrarDetalles(){
+    super.mostrarDetalles();
+    print('Garantía de $garantia meses');
+  }
+  
+  //constructor personalizado
+  Electronico.soloNombreYPrecio(String nombre, String precio) : this(nombre, precio, 'No especificada', 'Garantía no especificada');
+}
+
+/*
+ void main(){
+  Electronico nuevo = Electronico('Laptop','2000', 'Electronica','2');
+  nuevo.mostrarDetalles();
+}
+ */
+/*
+ void main(){
+  Electronico nuevo = Electronico.soloNombreYPrecio('Laptop','2000');
+  nuevo.mostrarDetalles();
+}
+ */
+
+//parte3
+
+abstract class EmpleadoTienda {
+  String nombre;
+  int horasTrabajadas;
+  
+  EmpleadoTienda(this.nombre, this.horasTrabajadas);
+  
+  //Método abstracto para calcular el salario
+  double calcularSalario();
+  
+  //Método para mostrar los detalles del empleado
+  void mostrarDetalles(){
+    print('Nombre: $nombre');
+    print('Horas Trabajadas: $horasTrabajadas');
+    print('Salarioo: ${calcularSalario()}');
+  }
+}
+
+class Vendedor extends EmpleadoTienda{
+  double tasa = 20;
+  
+  Vendedor(String nombre, int horasTrabajadas) : super(nombre, horasTrabajadas);
+  
+  @override
+  double calcularSalario(){
+    return horasTrabajadas * tasa;
+  }
+}
+
+class Cajero extends EmpleadoTienda {
+  double tasa = 30;
+  
+  Cajero(String nombre, int horasTrabajadas) : super(nombre, horasTrabajadas);
+  
+  
+  @override
+  double calcularSalario(){
+    return horasTrabajadas * tasa;
+  }
+}
+
+void main(){
+  
+  Vendedor vendedor = Vendedor('Juan Pérez', 40);
+  Cajero cajero = Cajero('Ana Gómez', 35);
+  
+  vendedor.mostrarDetalles();
+  print('');
+  cajero.mostrarDetalles();
+}
+
+
+
+
+
+  
