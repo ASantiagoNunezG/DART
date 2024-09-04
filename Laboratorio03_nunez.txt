@@ -1,0 +1,86 @@
+//Ejercicio04
+
+class Producto {
+  String? nombre;
+  double? precio;
+  int? cantidadEnStock;
+}
+
+mixin GestionInventario {
+  
+  void actualizarStock(){
+    print("stock actualizado");
+  }  
+}
+
+class ProductoConGestion extends Producto with GestionInventario{
+  
+}
+
+void main(){
+  ProductoConGestion productocongestion = ProductoConGestion();
+  productocongestion.actualizarStock();
+}
+
+//Ejercicio 05
+
+class Votante {
+  String? nombre;
+  int? edad;
+  bool? haVotado;
+}
+
+mixin ValidacionVoto{
+  void validarVoto(){
+    print("Verificando la edad ...");
+  }
+}
+
+class VotanteValido extends Votante with ValidacionVoto{
+  void msg(){
+    print("Votante Nuñez apto para votar");
+  }
+}
+
+void main(){
+  VotanteValido votante = VotanteValido();
+  
+  votante.validarVoto();
+  votante.msg();
+}
+
+//Ejercicio 06
+
+class Habitacion {
+  int? numeroHabitacion;
+  String? tipo;
+  bool? estaDisponible;
+
+  Habitacion(this.numeroHabitacion, this.estaDisponible, this.tipo);
+}
+mixin ReservaHabitacion {
+  void reservar(String cliente) {
+    print("Reservando habitación para el cliente $cliente");
+  }
+}
+
+class HabitacionReservada extends Habitacion with ReservaHabitacion {
+  HabitacionReservada(int numeroHabitacion, bool estaDisponible, String tipo)
+      : super(numeroHabitacion, estaDisponible, tipo);
+
+  @override
+  String toString() {
+    return 'Habitación $numeroHabitacion, Tipo: $tipo, Disponible: $estaDisponible';
+  }
+}
+
+void main() {
+  HabitacionReservada habitacion1 = HabitacionReservada(101, true, "Doble");
+  habitacion1.reservar("Nuñez");
+  print(habitacion1);
+
+  HabitacionReservada habitacion2 = HabitacionReservada(102, false, "Individual");
+  habitacion2.reservar("Perez");
+  print(habitacion2);
+
+}
