@@ -38,7 +38,7 @@ class CalendarYear extends StatelessWidget {
   Widget _buildMonth(int month) {
     String monthName = _getMonthName(month);
     List<Widget> dayWidgets = _buildDaysInMonth(month);
-    Color monthColor = _getMonthColor(month); // Obtener color del mes
+    String imageUrl = _getMonthImage(month); // Obtener la imagen de fondo
 
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0), // Margen entre meses
@@ -46,7 +46,14 @@ class CalendarYear extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey.shade400),
         borderRadius: BorderRadius.circular(8.0),
-        color: monthColor, // Color de fondo del mes
+        image: DecorationImage(
+          image: NetworkImage(imageUrl), // Cargar imagen desde URL
+          fit: BoxFit.cover, // Ajustar la imagen al tamaño del contenedor
+          colorFilter: ColorFilter.mode(
+            Colors.black.withOpacity(0.3), // Darle un efecto oscurecido para resaltar el texto
+            BlendMode.darken,
+          ),
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -133,35 +140,22 @@ class CalendarYear extends StatelessWidget {
     return monthNames[monthIndex - 1]; // Restar 1 porque los índices comienzan en 0
   }
 
-  // Obtener color para cada mes
-  Color _getMonthColor(int month) {
-    switch (month) {
-      case 1:
-        return Colors.redAccent; // Enero
-      case 2:
-        return Colors.pinkAccent; // Febrero
-      case 3:
-        return Colors.greenAccent; // Marzo
-      case 4:
-        return Colors.lightBlueAccent; // Abril
-      case 5:
-        return Colors.amberAccent; // Mayo
-      case 6:
-        return Colors.tealAccent; // Junio
-      case 7:
-        return Colors.deepOrangeAccent; // Julio
-      case 8:
-        return Colors.blue; // Agosto
-      case 9:
-        return Colors.purpleAccent; // Septiembre
-      case 10:
-        return Colors.indigoAccent; // Octubre
-      case 11:
-        return Colors.limeAccent; // Noviembre
-      case 12:
-        return Colors.cyanAccent; // Diciembre
-      default:
-        return Colors.white; // Color por defecto
-    }
+  // Obtener la imagen para cada mes
+  String _getMonthImage(int month) {
+    const monthImages = [
+      'https://img.freepik.com/free-photo/anime-moon-landscape_23-2151645914.jpg?size=626&ext=jpg&ga=GA1.1.1607071139.1716267537&semt=ais_hybrid',   // Imagen para Enero
+      'https://img.freepik.com/free-photo/anime-moon-landscape_23-2151645909.jpg?t=st=1727321882~exp=1727325482~hmac=f366880494b2f2353bfd22237bd8c2d05a3ace59477f7457f33da709ba0222f6&w=1380',  // Imagen para Febrero
+      'https://img.freepik.com/free-photo/illustration-anime-city_23-2151779628.jpg?size=626&ext=jpg&ga=GA1.1.1607071139.1716267537&semt=ais_hybrid',     // Imagen para Marzo
+      'https://img.freepik.com/free-photo/anime-car-city_23-2151710993.jpg?size=626&ext=jpg&ga=GA1.2.1607071139.1716267537&semt=ais_hybrid',     // Imagen para Abril
+      'https://img.freepik.com/free-photo/8-bit-graphics-pixels-scene-with-person-bench-sunset_23-2151120903.jpg?size=626&ext=jpg&ga=GA1.1.1607071139.1716267537&semt=ais_hybrid',       // Imagen para Mayo
+      'https://img.freepik.com/free-photo/anime-style-cozy-home-interior-with-furnishings_23-2151176392.jpg?size=626&ext=jpg&ga=GA1.1.1607071139.1716267537&semt=ais_hybrid',      // Imagen para Junio
+      'https://img.freepik.com/free-photo/digital-art-style-scene-with-people-playing-chess_23-2151499402.jpg?size=626&ext=jpg&ga=GA1.1.1607071139.1716267537&semt=ais_hybrid',      // Imagen para Julio
+      'https://img.freepik.com/free-photo/illustration-anime-city_23-2151779607.jpg?size=626&ext=jpg&ga=GA1.1.1607071139.1716267537&semt=ais_hybrid',    // Imagen para Agosto
+      'https://img.freepik.com/free-vector/gradient-lo-fi-illustrations_52683-82981.jpg?size=626&ext=jpg&ga=GA1.1.1607071139.1716267537&semt=ais_hybrid', // Imagen para Septiembre
+      'https://img.freepik.com/free-photo/illustration-rain-futuristic-city_23-2151406603.jpg?size=626&ext=jpg&ga=GA1.1.1607071139.1716267537&semt=ais_hybrid',   // Imagen para Octubre
+      'https://img.freepik.com/free-photo/illustration-anime-city_23-2151779742.jpg?size=626&ext=jpg&ga=GA1.1.1607071139.1716267537&semt=ais_hybrid',  // Imagen para Noviembre
+      'https://img.freepik.com/free-photo/aesthetic-anime-character-gaming_23-2151560681.jpg?size=626&ext=jpg&ga=GA1.2.1607071139.1716267537&semt=ais_hybrid',  // Imagen para Diciembre
+    ];
+    return monthImages[month - 1]; // Restar 1 porque los índices comienzan en 0
   }
 }
