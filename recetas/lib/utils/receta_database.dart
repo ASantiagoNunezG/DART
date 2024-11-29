@@ -1,9 +1,6 @@
-//lib/utils/receta_database.dart
-import 'dart:io';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import '../models/receta.dart';
-import 'package:path_provider/path_provider.dart';
 
 class RecetaDatabase {
   static final RecetaDatabase instance = RecetaDatabase._internal();
@@ -38,7 +35,7 @@ class RecetaDatabase {
         ${RecetaFields.ingredientes} ${RecetaFields.textType},
         ${RecetaFields.preparacion} ${RecetaFields.textType},
         ${RecetaFields.fechaCreacion} ${RecetaFields.textType},
-        ${RecetaFields.imagen} ${RecetaFields.textType},
+        ${RecetaFields.imagen} TEXT,
         ${RecetaFields.dificultad} ${RecetaFields.intType},
         ${RecetaFields.tiempoPreparacion} ${RecetaFields.intType}
       )

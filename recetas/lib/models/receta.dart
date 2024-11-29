@@ -1,5 +1,3 @@
-//lib/models/receta.dart
-
 class RecetaFields {
   static const List<String> values = [
     id,

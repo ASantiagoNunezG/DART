@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../utils/receta_database.dart';
 import '../models/receta.dart';
 import 'agregar_receta_screen.dart';
+import 'package:intl/intl.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -33,7 +34,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   // Navegar a la vista de agregar/editar receta
   goToAgregarRecetaScreen({int? id}) async {
-    // Si id es null, estamos agregando una receta nueva
     await Navigator.push(
       context,
       MaterialPageRoute(
@@ -84,46 +84,67 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Recetas"),
-        backgroundColor: Colors.green,
+        title: const Text("Recetas de Cocina"),
+        backgroundColor: Color(0xFF8E7D6E), // Color marrón elegante
+        elevation: 10,
+        centerTitle: true,
+        titleTextStyle: TextStyle(
+          fontFamily: 'Courier', // Retro font
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+        ),
       ),
       body: Center(
         child: recetas.isEmpty
-            ? const Text(
-                'No hay recetas',
-                style: TextStyle(fontSize: 20, color: Colors.black),
+            ? const Padding(
+                padding: EdgeInsets.all(20.0),
+                child: Text(
+                  'No hay recetas disponibles. ¡Añade algunas!',
+                  style: TextStyle(fontSize: 20, color: Colors.black87),
+                  textAlign: TextAlign.center,
+                ),
               )
             : ListView.builder(
                 itemCount: recetas.length,
                 itemBuilder: (context, index) {
                   final receta = recetas[index];
                   return Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(10.0),
                     child: Card(
-                      elevation: 4,
+                      color: Colors.orange.shade50, 
+                      elevation: 12,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
+                        borderRadius: BorderRadius.circular(20), 
                       ),
                       child: Column(
                         children: [
                           ListTile(
+                            contentPadding: EdgeInsets.all(20), 
                             title: Text(
                               receta.titulo,
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
-                                fontSize: 18,
+                                fontSize: 22, 
+                                fontFamily: 'Courier',
+                                color: Color(0xFF8E7D6E), 
                               ),
                             ),
-                            subtitle: Text('Dificultad: ${receta.dificultad}'),
+                            subtitle: Text(
+                              'Dificultad: ${receta.dificultad}',
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  color: Colors.orange.shade800,
+                                  fontStyle: FontStyle.italic),
+                            ),
                             trailing: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 IconButton(
-                                  icon: const Icon(Icons.edit),
+                                  icon: const Icon(Icons.edit, color: Colors.green),
                                   onPressed: () => goToAgregarRecetaScreen(id: receta.id),
                                 ),
                                 IconButton(
-                                  icon: const Icon(Icons.delete),
+                                  icon: const Icon(Icons.delete, color: Colors.red),
                                   onPressed: () => deleteReceta(receta.id),
                                 ),
                               ],
@@ -132,7 +153,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           if (recetaSeleccionada == receta)
                             Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -140,33 +161,46 @@ class _HomeScreenState extends State<HomeScreen> {
                                     "Descripción:",
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 16),
+                                        fontSize: 18,
+                                        fontFamily: 'Courier'),
                                   ),
                                   Text(receta.descripcion),
-                                  const SizedBox(height: 10),
+                                  const SizedBox(height: 12), // Más espacio
                                   const Text(
                                     "Ingredientes:",
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 16),
+                                        fontSize: 18,
+                                        fontFamily: 'Courier'),
                                   ),
                                   Text(receta.ingredientes),
-                                  const SizedBox(height: 10),
+                                  const SizedBox(height: 12), 
                                   const Text(
                                     "Preparación:",
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 16),
+                                        fontSize: 18,
+                                        fontFamily: 'Courier'),
                                   ),
                                   Text(receta.preparacion),
-                                  const SizedBox(height: 10),
+                                  const SizedBox(height: 12), 
                                   const Text(
                                     "Tiempo de Preparación:",
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 16),
+                                        fontSize: 18,
+                                        fontFamily: 'Courier'),
                                   ),
                                   Text("${receta.tiempoPreparacion} minutos"),
+                                  const SizedBox(height: 12), // Más espacio
+                                  const Text(
+                                    "Fecha del registro de la receta: ",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18,
+                                        fontFamily: 'Courier'),
+                                  ),
+                                  Text(DateFormat('HH:mm dd/MM/yyyy').format(DateTime.parse(receta.fechaCreacion))),
                                 ],
                               ),
                             ),
@@ -180,7 +214,8 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () => goToAgregarRecetaScreen(), // No se pasa id para agregar nueva receta
         tooltip: 'Agregar Receta',
-        child: const Icon(Icons.add),
+        backgroundColor: Color(0xFF8E7D6E), 
+        child: const Icon(Icons.add, color: Colors.white),
       ),
     );
   }
