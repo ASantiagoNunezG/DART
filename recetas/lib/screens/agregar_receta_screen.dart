@@ -45,7 +45,7 @@ class _AgregarRecetaScreenState extends State<AgregarRecetaScreen> {
     }
   }
 
-  // Guardar o actualizar la receta
+  
   saveReceta() {
     setState(() {
       isLoading = true;
@@ -76,11 +76,11 @@ class _AgregarRecetaScreenState extends State<AgregarRecetaScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.recetaId == null ? "Agregar Receta" : "Editar Receta"),
-        backgroundColor: Color(0xFF8E7D6E), // Mantener color marrón en la barra
+        backgroundColor: Color(0xFF8E7D6E), 
         elevation: 6,
         toolbarHeight: 80,
         titleTextStyle: TextStyle(
-          fontFamily: 'Courier', // Retro font
+          fontFamily: 'Courier',
           fontWeight: FontWeight.bold,
           color: Colors.white,
         ),
