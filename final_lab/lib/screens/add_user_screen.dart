@@ -13,17 +13,18 @@ class _AddUserScreenState extends State<AddUserScreen> {
   String _firstName = '';
   String _lastName = '';
   String _email = '';
+  String _avatarUrl = '';
 
   void _submitForm() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
 
       try {
-        await createUser(_firstName, _lastName, _email);
+        await createUser(_firstName, _lastName, _email, _avatarUrl);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Usuario creado exitosamente')),
         );
-        Navigator.pop(context);
+        Navigator.pop(context); // Regresa a la lista
       } catch (error) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Error al crear usuario: $error')),
@@ -35,7 +36,11 @@ class _AddUserScreenState extends State<AddUserScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Agregar Usuario')),
+      appBar: AppBar(
+        title: Text('Agregar Usuario',
+            style: TextStyle(fontFamily: 'Lora', fontWeight: FontWeight.bold)),
+        backgroundColor: Colors.brown[100],
+      ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Form(
@@ -43,7 +48,14 @@ class _AddUserScreenState extends State<AddUserScreen> {
           child: Column(
             children: [
               TextFormField(
-                decoration: InputDecoration(labelText: 'Nombre'),
+                decoration: InputDecoration(
+                  labelText: 'Nombre',
+                  labelStyle: TextStyle(fontFamily: 'Roboto'),
+                  focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.brown)),
+                  enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.brown[200]!)),
+                ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Por favor ingresa un nombre';
@@ -54,8 +66,16 @@ class _AddUserScreenState extends State<AddUserScreen> {
                   _firstName = value!;
                 },
               ),
+              SizedBox(height: 20),
               TextFormField(
-                decoration: InputDecoration(labelText: 'Apellido'),
+                decoration: InputDecoration(
+                  labelText: 'Apellido',
+                  labelStyle: TextStyle(fontFamily: 'Roboto'),
+                  focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.brown)),
+                  enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.brown[200]!)),
+                ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Por favor ingresa un apellido';
@@ -66,8 +86,16 @@ class _AddUserScreenState extends State<AddUserScreen> {
                   _lastName = value!;
                 },
               ),
+              SizedBox(height: 20),
               TextFormField(
-                decoration: InputDecoration(labelText: 'Correo Electrónico'),
+                decoration: InputDecoration(
+                  labelText: 'Correo Electrónico',
+                  labelStyle: TextStyle(fontFamily: 'Roboto'),
+                  focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.brown)),
+                  enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.brown[200]!)),
+                ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Por favor ingresa un correo';
@@ -82,9 +110,40 @@ class _AddUserScreenState extends State<AddUserScreen> {
                 },
               ),
               SizedBox(height: 20),
+              TextFormField(
+                decoration: InputDecoration(
+                  labelText: 'URL del Avatar',
+                  labelStyle: TextStyle(fontFamily: 'Roboto'),
+                  focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.brown)),
+                  enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.brown[200]!)),
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Por favor ingresa una URL de avatar';
+                  }
+                  final uri = Uri.tryParse(value);
+                  if (uri == null || !uri.hasAbsolutePath) {
+                    return 'Por favor ingresa una URL válida';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  _avatarUrl = value!;
+                },
+              ),
+              SizedBox(height: 20),
+              SizedBox(height: 20),
               ElevatedButton(
                 onPressed: _submitForm,
-                child: Text('Agregar Usuario'),
+                child: Text('Agregar Usuario',
+                    style: TextStyle(fontFamily: 'PressStart2P')),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors
+                      .brown[300], 
+                      foregroundColor: Colors.white,
+                ),
               ),
             ],
           ),
